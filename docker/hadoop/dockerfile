@@ -1,0 +1,25 @@
+# 使用官方OpenJDK 8镜像作为基础镜像
+FROM anolis-registry.cn-zhangjiakou.cr.aliyuncs.com/openanolis/openjdk:8-8.6
+
+RUN apk --no-cache add curl
+# 设置环境变量
+ENV HADOOP_VERSION 3.3.6
+ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
+ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+# 下载并解压Hadoop
+RUN curl -L https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz | tar -xzf - -C /opt && \
+    rm hadoop-$HADOOP_VERSION.tar.gz
+
+
+# 复制配置文件到容器中
+COPY core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
+COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+COPY mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml
+COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
+
+# 暴露Hadoop和Spark的端口
+EXPOSE 9870 9000 8088 7077 8080 18080 9864
+
+# 启动脚本
+CMD ["/bin/bash"]

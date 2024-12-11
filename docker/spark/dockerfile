@@ -1,0 +1,20 @@
+# 使用官方OpenJDK 8镜像作为基础镜像
+FROM anolis-registry.cn-zhangjiakou.cr.aliyuncs.com/openanolis/openjdk:8-8.6
+
+RUN apk --no-cache add curl
+# 设置环境变量
+ENV SPARK_VERSION 3.5.3
+ENV SPARK_HOME /opt/spark-$SPARK_VERSION
+ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+# 下载并解压Spark
+RUN curl -L https://downloads.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION.tgz | tar -xzf - -C /opt &&\
+    && rm spark-$SPARK_VERSION.tgz
+
+COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+
+# 暴露Hadoop和Spark的端口
+EXPOSE 9870 9000 8088 7077 8080 18080 9864
+
+# 启动脚本
+CMD ["/bin/bash"]
