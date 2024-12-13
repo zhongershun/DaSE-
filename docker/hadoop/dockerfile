@@ -60,8 +60,6 @@ RUN cat /opt/hadoop-3.3.6/sbin/start-yarn.sh >> tmpfile1 && cp tmpfile1 /opt/had
 RUN cat /opt/hadoop-3.3.6/sbin/stop-yarn.sh >> tmpfile && cp tmpfile /opt/hadoop-3.3.6/sbin/stop-yarn.sh && rm tmpfile
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
-RUN mkdir $HADOOP_HOME/tmp/namenode
-RUN mkdir $HADOOP_HOME/tmp/datanode
 
 # 复制配置文件到容器中
 COPY core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
