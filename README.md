@@ -82,11 +82,12 @@ docker-compose up -d
 
 docker exec -it namenode bash
 
-# #namenode
-# chmod -R 755 /usr/local/hadoop-3.3.6/tmp/namenode
-# #datanode
-# chmod -R 755 /usr/local/hadoop-3.3.6/tmp/datanode
+# namenode
+rm -rf /usr/local/hadoop-3.3.6/tmp/namenode/*
 
+#所有的datanode都要执行
+rm -rf /usr/local/hadoop-3.3.6/tmp/datanode/*
+chmod -R 755 /usr/local/hadoop-3.3.6/tmp/datanode
 ```
 
 
