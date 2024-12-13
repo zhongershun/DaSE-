@@ -74,6 +74,34 @@ v2.31.0
 hadoop 3.3.6
 spark 3.5.3
 
+hadoop启动方式
+
+```sh
+docker-compose build
+docker-compose up -d
+
+docker exec -it namenode bash
+
+# #namenode
+# chmod -R 755 /usr/local/hadoop-3.3.6/tmp/namenode
+# #datanode
+# chmod -R 755 /usr/local/hadoop-3.3.6/tmp/datanode
+
+```
+
+
+namende
+```sh
+# 数据格式化
+$HADOOP_HOME/bin/hdfs namenode -format
+
+# 启动
+$HADOOP_HOME/sbin/start-dfs.sh
+$HADOOP_HOME/sbin/start-yarn.sh 
+```
+
+
+
 实验结果
 
 实验总结
