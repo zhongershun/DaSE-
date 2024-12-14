@@ -77,14 +77,17 @@ spark 3.5.3
 hadoop启动方式
 
 ```sh
-docker-compose build
-docker-compose up -d
+docker-compose build namenode datanode1 datanode2
+docker-compose up namenode datanode1 datanode2 -d
 
 docker exec -it namenode bash
 
 # namenode
 rm -rf /usr/local/hadoop-3.3.6/tmp/namenode/*
+```
 
+```sh
+docker exec -it datanode bash
 #所有的datanode都要执行
 rm -rf /usr/local/hadoop-3.3.6/tmp/datanode/*
 chmod -R 755 /usr/local/hadoop-3.3.6/tmp/datanode
@@ -93,6 +96,7 @@ chmod -R 755 /usr/local/hadoop-3.3.6/tmp/datanode
 
 namende
 ```sh
+docker exec -it namenode bash
 # 数据格式化
 $HADOOP_HOME/bin/hdfs namenode -format
 
@@ -101,6 +105,14 @@ $HADOOP_HOME/sbin/start-dfs.sh
 $HADOOP_HOME/sbin/start-yarn.sh 
 ```
 
+
+spark启动
+```sh
+docker-compose build spark-master spark-worker1 spark-worker2
+docker-compose up spark-master spark-worker1 spark-worker2 -d
+docker exec -it spark-master bash
+$SPARK_HOME/sbin/start-all.sh
+```
 
 
 实验结果

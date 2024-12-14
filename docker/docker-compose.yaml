@@ -50,6 +50,49 @@ services:
         ipv4_address: 172.25.0.4
     tty: true
 
+  spark-master:
+    build: ./spark
+    container_name: spark-master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "6066:6066"
+      - "2225:22"
+    environment:
+      - SPARK_MODE=master
+    networks:
+      hadoop-net:
+        ipv4_address: 172.25.0.5
+    tty: true
+
+  spark-worker-1:
+    build: ./spark
+    container_name: spark-worker-1
+    ports:
+      - "8081:8081"
+      - "2226:22"
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+    networks:
+      hadoop-net:
+        ipv4_address: 172.25.0.6
+    tty: true
+
+  spark-worker-2:
+    build: ./spark
+    container_name: spark-worker-2
+    ports:
+      - "8082:8081"
+      - "2227:22"
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+    networks:
+      hadoop-net:
+        ipv4_address: 172.25.0.7
+    tty: true
+
 networks:
   hadoop-net:
     driver: bridge
