@@ -37,11 +37,11 @@ ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
 ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 # 下载并解压Hadoop
-#RUN wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz \
-#    && tar -xzf hadoop-$HADOOP_VERSION.tar.gz -C /opt \
-#    && rm hadoop-$HADOOP_VERSION.tar.gz
-COPY hadoop-3.3.6.tar.gz hadoop-3.3.6.tar.gz
-RUN tar -xzf hadoop-3.3.6.tar.gz -C /opt && rm hadoop-3.3.6.tar.gz
+RUN wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz \
+   && tar -xzf hadoop-$HADOOP_VERSION.tar.gz -C /opt \
+   && rm hadoop-$HADOOP_VERSION.tar.gz
+# COPY hadoop-3.3.6.tar.gz hadoop-3.3.6.tar.gz
+# RUN tar -xzf hadoop-3.3.6.tar.gz -C /opt && rm hadoop-3.3.6.tar.gz
 
 RUN echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> tmpfile
 RUN echo "HDFS_DATANODE_USER=root" >> tmpfile
@@ -69,7 +69,7 @@ COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
 COPY workers $HADOOP_HOME/etc/hadoop/workers
 
 # 暴露Hadoop和Spark的端口
-EXPOSE 9870 9000 8088 7077 8080 18080 9864 22
+EXPOSE 9870 9000 8088 7077 8080 18080 9864 22 10020 19888
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

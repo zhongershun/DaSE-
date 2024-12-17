@@ -26,18 +26,18 @@ ENV SPARK_HOME /opt/spark-$SPARK_VERSION-bin-hadoop3
 ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
 # 下载并解压Spark
-# RUN wget https://downloads.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION.tgz \
-#     && tar -xzf spark-$SPARK_VERSION.tgz -C /opt \
-#     && rm spark-$SPARK_VERSION.tgz
-COPY spark-3.5.3-bin-hadoop3.tgz spark-3.5.3-bin-hadoop3.tgz
-RUN tar -xzf spark-3.5.3-bin-hadoop3.tgz -C /opt && rm spark-3.5.3-bin-hadoop3.tgz
+RUN wget https://downloads.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION.tgz \
+    && tar -xzf spark-$SPARK_VERSION.tgz -C /opt \
+    && rm spark-$SPARK_VERSION.tgz
+# COPY spark-3.5.3-bin-hadoop3.tgz spark-3.5.3-bin-hadoop3.tgz
+# RUN tar -xzf spark-3.5.3-bin-hadoop3.tgz -C /opt && rm spark-3.5.3-bin-hadoop3.tgz
 
 COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
-COPY workers $SPARK_HOME/conf/spark-defaults.conf
+COPY workers $SPARK_HOME/conf/workers
 COPY spark-env.sh $SPARK_HOME/conf/spark-env.sh
 
 # 暴露Hadoop和Spark的端口
-EXPOSE 9870 9000 8088 7077 8080 18080 9864 22
+EXPOSE 9870 9000 8088 7077 8080 18080 9864 22 10020 19888
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

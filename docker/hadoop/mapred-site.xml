@@ -15,4 +15,23 @@
     <name>mapreduce.reduce.env</name>
     <value>HADOOP_MAPRED_HOME=/opt/hadoop-3.3.6</value>
   </property>
+  <property>
+        <name>mapreduce.jobhistory.address</name>
+        <value>namenode:10020</value>
+    </property>
+
+    <!-- 历史服务器web端地址 -->
+    <property>
+        <name>mapreduce.jobhistory.webapp.address</name>
+        <value>namenode:19888</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.intermediate-done-dir</name>
+      <value>/tmp/hadoop-yarn/staging/history/intermediate-done</value> <!-- 临时历史目录 -->
+    </property>
+
+    <property>
+      <name>mapreduce.jobhistory.done-dir</name>
+      <value>/tmp/hadoop-yarn/staging/history/done</value> <!-- 任务完成后的历史目录 -->
+    </property>
 </configuration>
